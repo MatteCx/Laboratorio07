@@ -54,7 +54,6 @@ class Controller:
         genere = self._view.selettoreGenere.value
         if biblioteca == "0": biblioteca = None
         if genere == "0": genere = None
-        print(biblioteca, genere)
         libri = self._model.get_libri_filtrati(biblioteca, genere) #lista di oggetti
         if libri is None : self._view.messaggioDiErrore.visible = True
         if libri is not None: self._view.elencoLibri.controls = [ft.Text(str(el)) for el in libri]
