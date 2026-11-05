@@ -34,8 +34,10 @@ class Controller:
     # AZIONE: MOSTRA LIBRI
     # TODO
     def cerca(self, e):
+        self._view.messaggioDiErrore.visible = False
         biblioteca = self._view.selettoreBiblioteca.value
         genere = self._view.selettoreGenere.value
         libri = self._model.get_libri_filtrati(biblioteca, genere) #lista di oggetti
-        self._view.elencoLibri.controls = [ft.Text(str(el)) for el in libri]
+        if libri is None : self._view.messaggioDiErrore.visible = True
+        if libri is not None: self._view.elencoLibri.controls = [ft.Text(str(el)) for el in libri]
         self._view.update()

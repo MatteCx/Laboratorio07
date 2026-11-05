@@ -27,6 +27,7 @@ class LibroDAO:
     def get_books(self, biblioteca, genere):
         self.cnx = DBConnect.get_connection()  # dovrebbe restituire l'equivalente di mysql.connector.connect
         cursore = self.cnx.cursor(dictionary=True)  # creazione cursore
+        if biblioteca is None or genere is None : return None
         query = (f"""SELECT *
                     FROM libro
                     WHERE id_biblioteca = {biblioteca} AND genere = '{genere}'""")

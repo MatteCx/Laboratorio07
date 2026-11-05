@@ -41,6 +41,7 @@ class View:
         self.selettoreGenere = ft.Dropdown(width=200, label="Genere", options=self.controller.popola_genere_dropdown())
 
         self.btn = ft.Button(content = "Cerca", on_click = lambda e: self.controller.cerca(e))
+        self.messaggioDiErrore = ft.Text("Nessun libro trovato o informazioni insufficienti", size = 15, color = ft.Colors.RED, weight=ft.FontWeight.W_500, visible = False)
 
         # Sezione 3: Libri
         # TODO
@@ -65,6 +66,7 @@ class View:
 
             # Sezione 3: Libri
             # TODO
+            self.messaggioDiErrore,
             self.elencoLibri,
         )
 
