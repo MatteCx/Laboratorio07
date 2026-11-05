@@ -36,5 +36,4 @@ class LibroDAO:
             lista_libri.append(Libro(**libro))
         cursore.close()
         self.cnx.close()
-        print(lista_libri)
         return lista_libri
