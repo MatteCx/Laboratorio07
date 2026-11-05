@@ -11,13 +11,14 @@ class LibroDAO:
         pass
 
     # TODO
-    def get_genre(self):
+    def get_genre(self, id_biblioteca):
         self.cnx = DBConnect.get_connection()  # dovrebbe restituire l'equivalente di mysql.connector.connect
         cursore = self.cnx.cursor(dictionary=True)  # creazione cursore
         query = ("""SELECT DISTINCT(genere)
-                    FROM libro""")
-        cursore.execute(query)
-        # lista_generi = cursore.fetchall()
+                    FROM libro
+                    WHERE id_biblioteca = COALESCE(%s, id_biblioteca)""")
+        parametro = (id_biblioteca,)
+        cursore.execute(query, parametro)
         lista_generi = [el['genere'] for el in cursore.fetchall()]
         cursore.close()
         self.cnx.close()
@@ -27,11 +28,11 @@ class LibroDAO:
     def get_books(self, biblioteca, genere):
         self.cnx = DBConnect.get_connection()  # dovrebbe restituire l'equivalente di mysql.connector.connect
         cursore = self.cnx.cursor(dictionary=True)  # creazione cursore
-        if biblioteca is None or genere is None : return None
-        query = (f"""SELECT *
-                    FROM libro
-                    WHERE id_biblioteca = {biblioteca} AND genere = '{genere}'""")
-        cursore.execute(query)
+        query = ("""SELECT *
+                    from libro
+                    where id_biblioteca = COALESCE(%s, id_biblioteca) and genere = COALESCE(%s, genere)""")
+        parametri = (biblioteca, genere)
+        cursore.execute(query, parametri)
         lista_libri = []
         for libro in cursore.fetchall():
             lista_libri.append(Libro(**libro))

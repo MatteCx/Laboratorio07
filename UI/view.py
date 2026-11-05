@@ -37,8 +37,8 @@ class View:
 
         # --- Sezione 2: Filtraggio ---
         # TODO
-        self.selettoreBiblioteca = ft.Dropdown(width=400, label="Biblioteca", options=self.controller.popola_biblioteca_dropdown())
-        self.selettoreGenere = ft.Dropdown(width=200, label="Genere", options=self.controller.popola_genere_dropdown())
+        self.selettoreBiblioteca = ft.Dropdown(width=400, label="Biblioteca", options=self.controller.popola_biblioteca_dropdown(), on_select = lambda e: self.controller.nuova_lista_genere(e))
+        self.selettoreGenere = ft.Dropdown(width=200, label="Genere", options=self.controller.popola_genere_dropdown(), on_select = lambda e: self.controller.nuova_lista_biblioteca(e))
 
         self.btn = ft.Button(content = "Cerca", on_click = lambda e: self.controller.cerca(e))
         self.messaggioDiErrore = ft.Text("Nessun libro trovato o informazioni insufficienti", size = 15, color = ft.Colors.RED, weight=ft.FontWeight.W_500, visible = False)

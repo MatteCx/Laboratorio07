@@ -12,12 +12,15 @@ class BibliotecaDAO:
 
     # TODO
 
-    def get_biblioteca(self):
+    def get_biblioteca(self, genere):
         self.cnx = DBConnect.get_connection()  # dovrebbe restituire l'equivalente di mysql.connector.connect
         cursore = self.cnx.cursor(dictionary=True)  # creazione cursore
-        query = ("""SELECT id, nome
-                    FROM biblioteca""")
-        cursore.execute(query)
+        query = ("""SELECT b.id as id, b.nome as nome
+                    FROM biblioteca b inner join libro l on(b.id = l.id_biblioteca)
+                    where l.genere = COALESCE(%s, genere)
+                    group by b.id, b.nome""")
+        parametro = (genere,)
+        cursore.execute(query, parametro)
         lista_biblioteche = cursore.fetchall()
         cursore.close()
         self.cnx.close()
